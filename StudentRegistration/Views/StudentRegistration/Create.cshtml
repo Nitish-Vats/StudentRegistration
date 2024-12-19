@@ -1,0 +1,58 @@
+﻿@model StudentRegistration.Models.StudentDetails
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Add New Student</h2>
+<hr />
+@using (Html.BeginForm("Create", "StudentRegistration", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Mobile)
+        @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Mobile)
+    </div>
+
+    <div class="form-group">
+        @Html.Label("State")
+        @Html.DropDownListFor(m => m.StateId, ViewBag.State as SelectList, "--Select State--", new { @id = "ddlStates", @class = "form-control" })
+        @* @Html.DropDownListFor(m => m.StateId, new SelectList(Model.States, "Value", "Text"), "--Select State--", new { @id = "ddlStates" })*@
+        @Html.ValidationMessageFor(m => m.StateId)
+    </div>
+
+    <div class="form-group">
+        @Html.Label("City")
+        <select id="ddlCities" name="CityId" class="form-control"></select>
+        @*@Html.DropDownListFor(m => m.CityId, new SelectList(Model.Cities, "Value", "Text"), "--Select City--", new { @id = "ddlCities" })*@
+        @Html.ValidationMessageFor(m => m.CityId)
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Text About Yourself")
+        @Html.TextAreaFor(m => m.TextAbout, new { maxlength = 250, @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.TextAbout)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Photo)
+        <input class="from-control" type="file" name="Photo" />
+        @Html.ValidationMessageFor(m => m.Photo)
+    </div>
+
+    <div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+}

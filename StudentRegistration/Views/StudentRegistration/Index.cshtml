@@ -1,0 +1,119 @@
+﻿@model IEnumerable<StudentRegistration.Models.StudentDetails>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>List of All Students</h2>
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 text-left">
+            @using (Html.BeginForm("Index", "StudentRegistration"))
+            {
+                <span class="col-sm-12" style="display:flex; justify-content:flex-start;">
+                    <input type="text" name="SearchText" class="form-control col-8" value="@ViewBag.SearchText" placeholder="Name" />
+                    <input class="btn btn-primary btn-info" type="submit" value="Search" />
+                </span>     }
+        </div>
+      
+        <div class="col-md-6 text-right" style="margin-right:2%;">
+            @Html.ActionLink("Add New", "Create", null, new { @class = "btn btn-primary" })
+        </div>
+
+    
+
+    </div>
+</div>
+<br />
+<style>
+    .row {
+        display: flex;
+        justify-content: space-between;
+    }
+
+   
+
+    .text-left {
+        text-align: left;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: flex-end;
+    }
+</style>
+<div class="table-responsive">
+    @if (Model != null && Model.Count() > 0)
+    {
+        <table class="table table-striped table-bordered table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mobile)
+                </th>
+                <th>
+                    @Html.DisplayName("State")
+                </th>
+                <th>
+                    @Html.DisplayName("City")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TextAbout)
+                </th>
+                <th> Photo </th>
+                <th>Edit/Delete</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mobile)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StateName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CityName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TextAbout)
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.ImagePath))
+                        {
+                            <img src="@Url.Content(item.ImagePath)" alt="Student Photo" style="width: 100px; height: 100px;" /> }
+                        else
+                        {
+                            <span>No Photo</span>}
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Update", new { id = item.Id }, new { @class = "btn btn-primary" }) 
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                    </td>
+                </tr>
+            }
+        </table>
+        @Html.Partial("~/Views/Shared/_Pager.cshtml", (StudentRegistration.Models.Pager)ViewBag.Pager);
+    }
+    else
+    {
+        <div class="container pt-5 pb-5">
+            No Record Found!
+        </div>
+    }
+</div>

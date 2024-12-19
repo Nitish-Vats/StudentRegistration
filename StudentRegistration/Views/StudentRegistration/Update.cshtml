@@ -1,0 +1,75 @@
+﻿@model StudentRegistration.Models.StudentDetails
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Update Student Details</h2>
+<hr />
+@using (Html.BeginForm("Update", "StudentRegistration", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Mobile)
+        @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Mobile)
+    </div>
+
+    <div class="form-group">
+        @Html.Label("State")
+        @Html.DropDownListFor(m => m.StateId, ViewBag.State as SelectList, "--Select State--", new { @id = "ddlStates", @class = "form-control" })
+
+
+
+        @* @Html.DropDownListFor(m => m.StateId, new SelectList(Model.States, "Value", "Text"), "--Select State--", new { @id = "ddlStates" })*@
+        @Html.ValidationMessageFor(m => m.StateId)
+    </div>
+
+    <div class="form-group">
+        @Html.Label("City")
+        @if (Model.CityId != 0)
+        {
+            @Html.DropDownListFor(m => m.CityId, new SelectList(Model.Cities, "Value", "Text"), "--Select City--", new { @id = "ddlCities", @class = "form-control" })
+        }
+        else
+        {
+            <select id="ddlCities" name="CityId" class="form-control" style="font-size:10px;"></select>
+        }
+
+
+
+
+
+
+        @*@Html.DropDownListFor(m => m.CityId, new SelectList(Model.Cities, "Value", "Text"), "--Select City--", new { @id = "ddlCities" })*@
+        @Html.ValidationMessageFor(m => m.CityId)
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Text About Yourself")
+        @Html.TextAreaFor(m => m.TextAbout, new { maxlength = 250, @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.TextAbout)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Photo)
+        <input class="from-control" type="file" name="Photo" />
+        @Html.ValidationMessageFor(m => m.Photo)
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+    <a href="@Url.Action("Index", "StudentRegistration")" class="btn btn-danger">Cancel</a>
+}
